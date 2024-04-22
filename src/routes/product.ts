@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
     deleteProduct,
     deleteProductImage,
+    getAllProducts,
     getLatestProducts,
     getListings,
     getProductDetail,
@@ -35,6 +36,7 @@ productRouter.patch(
 );
 productRouter.delete("/:id", isAuth, deleteProduct);
 productRouter.delete("/image/:productId/:imageId", isAuth, deleteProductImage);
+productRouter.get('/all', getAllProducts);
 productRouter.get("/detail/:id", getProductDetail);
 productRouter.get("/by-category/:category", getProductsByCategory);
 productRouter.get("/latest", getLatestProducts);

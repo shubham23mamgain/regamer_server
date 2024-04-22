@@ -93,12 +93,12 @@ export const updateProduct: RequestHandler = async (req, res) => {
     const product = await ProductModel.findOneAndUpdate(
         { _id: productId, owner: req.user.id },
         {
-            name,
-            price,
-            category,
-            description,
-            purchasingDate,
-            purchasingPrice
+            // name,
+            // price,
+            // category,
+            // description,
+            // purchasingDate,
+            // purchasingPrice
         },
         {
             new: true,
@@ -296,6 +296,32 @@ export const getLatestProducts: RequestHandler = async (req, res) => {
     res.json({ products: listings });
 };
 
+export const getAllProducts: RequestHandler = async (req, res) => {
+
+    const { pageNo = "1", limit = "10" } = req.query as {
+        pageNo: string;
+        limit: string;
+    };
+
+    const products = await ProductModel.find().sort("-createdAt").skip((+pageNo - 1) * +limit)
+        .limit(+limit);
+
+    let count = 0;
+    const listings = products.map((p) => {
+        count += 1;
+        return {
+            id: p._id,
+            name: p.name,
+            thumbnail: p.thumbnail,
+            category: p.category,
+            price: p.price,
+            purchasingPrice: p.purchasingPrice
+        };
+    });
+
+    res.json({ total: count, products: listings });
+};
+
 export const getListings: RequestHandler = async (req, res) => {
 
     const { pageNo = "1", limit = "10" } = req.query as {
@@ -303,12 +329,15 @@ export const getListings: RequestHandler = async (req, res) => {
         limit: string;
     };
 
+    let count = 0;
+
     const products = await ProductModel.find({ owner: req.user.id })
         .sort("-createdAt")
         .skip((+pageNo - 1) * +limit)
         .limit(+limit);
 
     const listings = products.map((p) => {
+        count += 1;
         return {
             id: p._id,
             name: p.name,
@@ -327,7 +356,7 @@ export const getListings: RequestHandler = async (req, res) => {
         };
     });
 
-    res.json({ products: listings });
+    res.json({ total: count, products: listings });
 };
 
 export const searchProducts: RequestHandler = async (req, res) => {

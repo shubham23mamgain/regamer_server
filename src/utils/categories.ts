@@ -2,8 +2,8 @@ const categories = [
     "PS 3",
     "PS 4",
     "PS 5",
-    "X Box One",
-    "X Box 360",
+    "Xbox One",
+    "Xbox 360",
     "PC"
 ];
 
