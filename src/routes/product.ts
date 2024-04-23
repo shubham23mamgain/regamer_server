@@ -41,6 +41,6 @@ productRouter.get("/detail/:id", getProductDetail);
 productRouter.get("/by-category/:category", getProductsByCategory);
 productRouter.get("/latest", getLatestProducts);
 productRouter.get("/listings", isAuth, getListings);
-productRouter.get("/search", isAuth, searchProducts);
+productRouter.get("/search", searchProducts);
 
 export default productRouter;

@@ -360,19 +360,35 @@ export const getListings: RequestHandler = async (req, res) => {
 };
 
 export const searchProducts: RequestHandler = async (req, res) => {
-    const { name } = req.query;
+
+
+    const { name = "name", pageNo = "1", limit = "10" } = req.query as {
+        pageNo: string;
+        limit: string;
+        name: string;
+    };
 
     const filter: FilterQuery<ProductDocument> = {};
 
     if (typeof name === "string") filter.name = { $regex: new RegExp(name, "i") };
 
-    const products = await ProductModel.find(filter).limit(50);
+    const products = await ProductModel.find(filter).skip((+pageNo - 1) * +limit)
+        .limit(+limit);
 
-    res.json({
-        results: products.map((product) => ({
+    let count = 0;
+
+    const results = products.map((product) => {
+        count += 1;
+        return {
             id: product._id,
             name: product.name,
             thumbnail: product.thumbnail,
-        })),
+        }
+
+    })
+
+    res.json({
+        displaying: count,
+        results
     });
 };

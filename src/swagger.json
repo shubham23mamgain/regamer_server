@@ -1,0 +1,1067 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Regamer Server - OpenAPI 3.0",
+    "description": "This is the Regamer Server for buying and selling of games on different platforms like PS3, PS4, PS5, PC, Xbox One and Xbox 360.\n\nThe API is based on the OpenAPI 3.0 specification.  \n\nYou can find out more about\nSwagger at [https://swagger.io](https://swagger.io).",
+    "contact": {
+      "email": "shubhammamgain614@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.11"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "pet",
+      "description": "Operations about Pet endpoint",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "product",
+      "description": "Operations about Products endpoint",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "auth",
+      "description": "Operations about Auth"
+    }
+  ],
+  "paths": {
+    "/product/list": {
+      "post": {
+        "tags": ["product"],
+        "summary": "Add a new Product",
+        "description": "Add a new product",
+        "operationId": "addProduct",
+        "requestBody": {
+          "description": "Create a new product in the app",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "422": {
+            "description": "Validation exception"
+          }
+        }
+      }
+    },
+    "/product/all": {
+      "get": {
+        "tags": ["product"],
+        "summary": "Get All Products",
+        "description": "Get all the products in the database.",
+        "operationId": "getAllProducts",
+        "parameters": [
+          {
+            "name": "pageNo",
+            "in": "query",
+            "description": "Page Number you want to get",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "number",
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit you want to get",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "number",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tag value"
+          }
+        }
+      }
+    },
+    "/product/search": {
+      "get": {
+        "tags": ["product"],
+        "summary": "Search Products",
+        "description": "Search from all the products in the database.",
+        "operationId": "searchProduct",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Product Name you want to search",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "default": "WWE"
+            }
+          },
+          {
+            "name": "pageNo",
+            "in": "query",
+            "description": "Page Number you want to get",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "number",
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit you want to get",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "number",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tag value"
+          }
+        }
+      }
+    },
+    "/product/latest": {
+      "get": {
+        "tags": ["product"],
+        "summary": "Get 10 Latest Products",
+        "description": "Get latest products in the database.",
+        "operationId": "getLatestProducts",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tag value"
+          }
+        }
+      }
+    },
+    "/product/detail/{productId}": {
+      "get": {
+        "tags": ["product"],
+        "summary": "Get  Product Detail",
+        "description": "Get Product Detail from the database.",
+        "operationId": "getProductDetails",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "Product ID you want to get",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "default": "bcd123456abc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tag value"
+          }
+        }
+      }
+    },
+    "/product/by-category/{category}": {
+      "get": {
+        "tags": ["product"],
+        "summary": "Finds Products by Category",
+        "description": "Finds Products by Category",
+        "operationId": "findProductsByCategory",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "path",
+            "description": "Category value that need to be considered for filter",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "default": "PC",
+              "enum": ["PC", "PS 3", "PS 4", "PS 5", "Xbox 360", "Xbox One"]
+            }
+          },
+          {
+            "name": "pageNo",
+            "in": "query",
+            "description": "Page Number you want to get",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "number",
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit you want to get",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "number",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        }
+      }
+    },
+    "/product/listings": {
+      "get": {
+        "tags": ["product"],
+        "summary": "Get All Products Posted By Owner",
+        "description": "Get all the products Posted by Owner in the database.",
+        "operationId": "getAllProductsByOwner",
+        "parameters": [
+          {
+            "name": "pageNo",
+            "in": "query",
+            "description": "Page Number you want to get",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "number",
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit you want to get",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "number",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tag value"
+          }
+        }
+      }
+    },
+    "/product/{productId}": {
+      "patch": {
+        "tags": ["product"],
+        "summary": "Update an existing product",
+        "description": "Update an existing product by Id",
+        "operationId": "updateProduct",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "Product ID you want to get",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "default": "bcd123456abc"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Update an existent product in the database",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Product not found"
+          },
+          "422": {
+            "description": "Validation exception"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["product"],
+        "summary": "Delete Product",
+        "description": "This can only be done by the logged in user and owner of Product.",
+        "operationId": "deleteProduct",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "The product ID that needs to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "bcd123456abc"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid product ID supplied"
+          },
+          "404": {
+            "description": "Product not found"
+          }
+        }
+      }
+    },
+    "/pet/{petId}/uploadImage": {
+      "post": {
+        "tags": ["pet"],
+        "summary": "uploads an image",
+        "description": "",
+        "operationId": "uploadFile",
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "description": "ID of pet to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "additionalMetadata",
+            "in": "query",
+            "description": "Additional Metadata",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": ["write:pets", "read:pets"]
+          }
+        ]
+      }
+    },
+    "/product/image/{productId}/{imageId}": {
+      "delete": {
+        "tags": ["product"],
+        "summary": "Delete Product Image",
+        "description": "This can only be done by the logged in user and owner of Product.",
+        "operationId": "deleteProductImage",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "The product ID that needs to be searched",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "bcd123456abc"
+            }
+          },
+          {
+            "name": "imageId",
+            "in": "path",
+            "description": "The image ID that needs to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "bcd123456abc"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid product ID supplied"
+          },
+          "404": {
+            "description": "Product not found"
+          }
+        }
+      }
+    },
+    "/auth/sign-up": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Create user",
+        "description": "Give Name, Email and Password in body",
+        "operationId": "createUser",
+        "requestBody": {
+          "description": "Created user object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/sign-in": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Login user",
+        "description": "Give Email and Password in body",
+        "operationId": "loginUser",
+        "requestBody": {
+          "description": "Login user object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/verify": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Verify user",
+        "description": "Give token received in email and owner id (monogdb id ) in body",
+        "operationId": "verifyUser",
+        "requestBody": {
+          "description": "Verify user object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthVerificationToken"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthVerificationToken"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthVerificationToken"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthVerificationToken"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthVerificationToken"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/sign-out": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Logs out current logged in user session",
+        "description": "",
+        "operationId": "logoutUser",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ImageModel": {
+        "required": ["id", "url"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Cloudinary Cloud ID",
+            "example": "v1710848411"
+          },
+          "url": {
+            "type": "string",
+            "description": "Cloudinary Secure Url",
+            "example": "https://res.cloudinary.com/dxltvwxun/image/upload/v1710848411/qziqtzqcrfwppdtzkryr.jpg"
+          }
+        },
+        "xml": {
+          "name": "imageUrl"
+        }
+      },
+      "Product": {
+        "required": [
+          "name",
+          "owner",
+          "price",
+          "purchasingPrice",
+          "description",
+          "category",
+          "purchasingDate"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "owner": {
+            "$ref": "#/components/schemas/User"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the product",
+            "example": "GTA 5 - PS 4"
+          },
+          "price": {
+            "type": "number",
+            "format": "double",
+            "example": 2499.99
+          },
+          "purchasingPrice": {
+            "type": "number",
+            "format": "double",
+            "example": 3799.99
+          },
+          "purchasingDate": {
+            "type": "date",
+            "format": "DD/MM/YYYY",
+            "example": "01/01/2024"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the product",
+            "example": "This is the description of the product"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category",
+            "example": "PS 4",
+            "enum": ["PS 3", "PS 4", "PS 5", "PC", "Xbox One", "Xbox 360"]
+          },
+          "images": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "items": {
+              "$ref": "#/components/schemas/ImageModel"
+            }
+          },
+          "thumbnail": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/dxltvwxun/image/upload/v1710832361/65f93ae8ea45c0e82f3a8ce6.jpg"
+          }
+        },
+        "xml": {
+          "name": "product"
+        }
+      },
+      "User": {
+        "required": ["name", "email", "password"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 7
+          },
+          "name": {
+            "type": "string",
+            "example": "Shubham"
+          },
+          "email": {
+            "type": "string",
+            "example": "shubham@email.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "Password should be strong",
+            "example": "Shubham@123"
+          },
+          "verified": {
+            "type": "boolean",
+            "default": false
+          },
+          "tokens": {
+            "type": "array",
+            "description": "Access Token",
+            "xml": {
+              "wrapped": true
+            },
+            "items": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjBkNjMyMTRhYWE1Y2RhZThmODA5ZCIsImlhdCI6MTcxMzg0ODE0MiwiZXhwIjoxNzEzOTM0NTQyfQ.lbyp8LFED8umCkfRE9DzSMoBYuwpkZSjN2wdfN10TpZ",
+              "xml": {
+                "name": "token"
+              }
+            }
+          },
+          "avatar": {
+            "$ref": "#/components/schemas/ImageModel"
+          }
+        },
+        "xml": {
+          "name": "user"
+        }
+      },
+      "AuthVerificationToken": {
+        "required": ["owner", "token"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/User"
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjBkNjMyMTRhYWE1Y2RhZThmODA5ZCIsImlhdCI6MTcxMzg0ODE0MiwiZXhwIjoxNzEzOTM0NTQyfQ.lbyp8LFED8umCkfRE9DzSMoBYuwpkZSjN2wdfN10TpZ"
+          },
+          "createdAt": {
+            "type": "date"
+          }
+        },
+        "xml": {
+          "name": "tag"
+        }
+      },
+      "PasswordResetToken": {
+        "required": ["owner", "token"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/User"
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjBkNjMyMTRhYWE1Y2RhZThmODA5ZCIsImlhdCI6MTcxMzg0ODE0MiwiZXhwIjoxNzEzOTM0NTQyfQ.lbyp8LFED8umCkfRE9DzSMoBYuwpkZSjN2wdfN10TpZ"
+          },
+          "createdAt": {
+            "type": "date"
+          }
+        },
+        "xml": {
+          "name": "tag"
+        }
+      },
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "##default"
+        }
+      }
+    },
+    "requestBodies": {
+      "Pet": {
+        "description": "Pet object that needs to be added to the store",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Pet"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Pet"
+            }
+          }
+        }
+      },
+      "Product": {
+        "description": "Product object that needs to be added",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "$ref": "#/components/schemas/Product"
+            }
+          }
+        }
+      },
+      "AuthVerificationToken": {
+        "description": "Auth token object that needs to be verified",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AuthVerificationToken"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "#/components/schemas/AuthVerificationToken"
+            }
+          },
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "$ref": "#/components/schemas/AuthVerificationToken"
+            }
+          }
+        }
+      },
+      "PasswordResetToken": {
+        "description": "Password reset token object that needs to be verified",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PasswordResetToken"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "#/components/schemas/PasswordResetToken"
+            }
+          },
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "$ref": "#/components/schemas/PasswordResetToken"
+            }
+          }
+        }
+      },
+      "UserArray": {
+        "description": "List of user object",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

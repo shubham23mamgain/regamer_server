@@ -4,7 +4,10 @@ import express from "express";
 import morgan from "morgan";
 import path from 'path';
 import formidable from "formidable";
+import helmet from 'helmet';
+import swaggerUi from "swagger-ui-express";
 
+const swaggerDocument = require("./swagger.json");
 import { dbConnect } from 'src/db';
 import { sendErrorRes } from './utils/helper';
 
@@ -21,15 +24,17 @@ app.use(morgan("dev"));
 app.use(express.static("src/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+app.disable('x-powered-by'); //  Hide that app is made using express
+app.use(helmet());   // adding security to app
 
 // Routes 
 app.use("/auth", authRouter);
 app.use("/product", productRouter);
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Custom Endpoints
 app.get('/', (req, res) => {
-    res.status(200).json({ message: 'This message is coming from Server' });
+    // res.status(200).json({ message: 'This message is coming from Server. For description of endpoints hit /api-docs endpoint' });
+    res.redirect(`/api-docs`);
 })
 
 // Test image upload using Formidable
@@ -55,4 +60,4 @@ app.use("*", (req, res) => {
     sendErrorRes(res, "Endpoint Not Found!", 404);
 });
 
-app.listen(port, () => console.log(`Server listening on port http://192.168.29.220:${port}`))
+app.listen(port, () => console.log(`Server listening on port http://localhost:${port}`))
