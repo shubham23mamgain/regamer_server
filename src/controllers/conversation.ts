@@ -86,7 +86,7 @@ export const getConversations: RequestHandler = async (req, res) => {
         })
         .select(
             "sentBy chats._id chats.content chats.timestamp chats.viewed participants"
-        );
+        ).sort("-updatedAt");
 
     if (!conversation) return sendErrorRes(res, "Details not found!", 404);
 
